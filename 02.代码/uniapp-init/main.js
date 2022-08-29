@@ -1,13 +1,21 @@
 import App from './App'
 
 import Vue from 'vue'
+
+import myAxios from 'utils/myAxios.js';
+import store from './store/index.js';
+
+
 Vue.config.productionTip = false
 
 // 此处相当于在声明App组件代表整个小程序
 App.mpType = 'app'
 
+Vue.prototype.$myAxios = myAxios;
+
 const app = new Vue({
-    ...App
+    ...App,
+	store
 	// el:"#app",
 	// render:h=>h(App)
 	// onLaunch: function() {

@@ -49,12 +49,16 @@
 </template>
 
 <script>
+	import {mapState,mapActions} from 'vuex';
 	export default {
+		// components:{
+		// 	Cart
+		// }
 		data() {
 			return {
 				currentIndex:-1,
 				
-				indexData:{}
+				// indexData:{}
 			}
 		},
 		// onLoad() {
@@ -63,21 +67,48 @@
 		// mounted(){
 		// 	console.log('mounted')
 		// },
-		created(){
+		async created(){
 			// console.log('created',window)
-			uni.request({
-				// url:"http://localhost:3001/getIndexData",
-				url:"/api/getIndexData",
-				success:(res)=>{
-					// console.log('res',res);
-					this.indexData = res.data;
-				}
-			})
+			// uni.request({
+			// 	// url:"http://localhost:3001/getIndexData",
+			// 	url:"/api/getIndexData",
+			// 	success:(res)=>{
+			// 		// console.log('res',res);
+			// 		this.indexData = res.data;
+			// 	}
+			// })
+			// 1.没有开启命名空间语法
+			// this.$store.dispatch('getIndexData');
+			
+			// 2.开启命名空间语法
+			// this.$store.dispatch('home/getIndexData');
+			
+			// 3.开启命名空间语法->mapActions早期版本
+				// this["home/getIndexData"]();
+			
+			// 4.使用mapActions语法快捷引入
+			// this.getIndexData()
+			
+			//	5.使用mapActions语法快捷引入->终极版
+				this.cartGetIndexData();
 		},
 		methods:{
 			changeCurrentIndex(index){
 				this.currentIndex = index;
-			}
+			},
+			// getIndexData(){
+			// 	this.$store.dispatch('home/getIndexData')
+			// }
+			// ...mapActions(["home/getIndexData"])
+			// ...mapActions("home",["getIndexData"])
+			...mapActions("home",{
+				cartGetIndexData:"getIndexData"
+			})
+		},
+		computed:{
+			...mapState("home",["indexData"])
+		},
+		components:{
 		}
 	}
 	
