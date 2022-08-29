@@ -157,17 +157,46 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      currentIndex: -1 };
+
   },
 
   onLoad: function onLoad() {
 
   },
 
-  methods: {} };exports.default = _default;
+  methods: {
+    changeCurrentIndex: function changeCurrentIndex(index) {
+      this.currentIndex = index;
+    } } };exports.default = _default;
 
 /***/ }),
 /* 18 */,

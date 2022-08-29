@@ -1,14 +1,14 @@
-.indexContainer {
+.indexContainer .header {
   display: flex;
   margin-top: 20rpx;
   align-items: center;
 }
-.indexContainer .logo {
+.indexContainer .header .logo {
   width: 118rpx;
   height: 40rpx;
   margin: 0 20rpx;
 }
-.indexContainer .search {
+.indexContainer .header .search {
   position: relative;
   height: 60rpx;
   background: #ccc;
@@ -16,22 +16,22 @@
   border-radius: 10rpx;
   padding-left: 60rpx;
 }
-.indexContainer .search .iconfont {
+.indexContainer .header .search .iconfont {
   position: absolute;
   top: 50%;
   left: 20rpx;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-.indexContainer .search .searchInput {
+.indexContainer .header .search .searchInput {
   height: 100%;
 }
-.indexContainer .search .searchInput .placeholder {
+.indexContainer .header .search .searchInput .placeholder {
   text-align: center;
   font-size: 24rpx;
   text-indent: -40rpx;
 }
-.indexContainer .username {
+.indexContainer .header .username {
   width: 140rpx;
   height: 60rpx;
   border-radius: 10rpx;
@@ -40,5 +40,19 @@
   text-align: center;
   line-height: 60rpx;
   margin: 0 20rpx;
+}
+.indexContainer .navScroll {
+  white-space: nowrap;
+}
+.indexContainer .navScroll .navItem {
+  display: inline-block;
+  width: 140rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 28rpx;
+}
+.indexContainer .navScroll .navItem.active {
+  border-bottom: 4rpx solid #f00;
 }
 
