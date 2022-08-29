@@ -45,11 +45,17 @@
 				{{item.text}}
 			</view>
 		</scroll-view>
+		
+		<!-- 内容区域 -->
+		<Recommend v-if="currentIndex===-1"></Recommend>
+		<CateList v-else></CateList>
 	</view>
 </template>
 
 <script>
 	import {mapState,mapActions} from 'vuex';
+	import Recommend from '../../components/Recommend/Recommend.vue';
+	import CateList from '../../components/CateList/CateList.vue';
 	export default {
 		// components:{
 		// 	Cart
@@ -109,6 +115,8 @@
 			...mapState("home",["indexData"])
 		},
 		components:{
+			CateList,
+			Recommend
 		}
 	}
 	
