@@ -1,24 +1,44 @@
-
-.content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+.indexContainer {
+  display: flex;
+  margin-top: 20rpx;
+  align-items: center;
 }
-.logo {
-	height: 200rpx;
-	width: 200rpx;
-	margin-top: 200rpx;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 50rpx;
+.indexContainer .logo {
+  width: 118rpx;
+  height: 40rpx;
+  margin: 0 20rpx;
 }
-.text-area {
-	display: flex;
-	justify-content: center;
+.indexContainer .search {
+  position: relative;
+  height: 60rpx;
+  background: #ccc;
+  flex-grow: 1;
+  border-radius: 10rpx;
+  padding-left: 60rpx;
 }
-.title {
-	font-size: 36rpx;
-	color: #8f8f94;
+.indexContainer .search .iconfont {
+  position: absolute;
+  top: 50%;
+  left: 20rpx;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.indexContainer .search .searchInput {
+  height: 100%;
+}
+.indexContainer .search .searchInput .placeholder {
+  text-align: center;
+  font-size: 24rpx;
+  text-indent: -40rpx;
+}
+.indexContainer .username {
+  width: 140rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+  color: #f00;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 60rpx;
+  margin: 0 20rpx;
 }
 
