@@ -36,6 +36,7 @@ router.get("/test",function(ctx,next){
     ctx.body="test success"
 })
 
+// 用于返回首页所需要的数据
 const indexData = require('./datas/index.json')
 router.get("/getIndexData",function(ctx,next){
     ctx.body=indexData

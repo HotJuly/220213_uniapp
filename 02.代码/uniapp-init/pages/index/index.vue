@@ -18,7 +18,12 @@
 			</view>
 			<button class="username">七月</button>
 		</view>
-		<scroll-view class="navScroll" enable-flex="true" scroll-x="true" >
+		<scroll-view
+			v-if="indexData.kingKongModule" 
+			class="navScroll" 
+			enable-flex="true" 
+			scroll-x="true" 
+		>
 			<view 
 			class="navItem" 
 			:class="{
@@ -33,11 +38,11 @@
 			:class="{
 				active:currentIndex===index
 			}" 
-			v-for="(item,index) in 10" 
-			:key="index"
+			v-for="(item,index) in indexData.kingKongModule.kingKongList" 
+			:key="item.L1Id"
 			@click="changeCurrentIndex(index)"
 			>
-				居家生活
+				{{item.text}}
 			</view>
 		</scroll-view>
 	</view>
@@ -47,14 +52,28 @@
 	export default {
 		data() {
 			return {
-				currentIndex:-1
+				currentIndex:-1,
+				
+				indexData:{}
 			}
-		}
-		,
-		onLoad() {
-			
-		}
-		,
+		},
+		// onLoad() {
+		// 	console.log('onLoad')
+		// },
+		// mounted(){
+		// 	console.log('mounted')
+		// },
+		created(){
+			// console.log('created',window)
+			uni.request({
+				// url:"http://localhost:3001/getIndexData",
+				url:"/api/getIndexData",
+				success:(res)=>{
+					// console.log('res',res);
+					this.indexData = res.data;
+				}
+			})
+		},
 		methods:{
 			changeCurrentIndex(index){
 				this.currentIndex = index;
