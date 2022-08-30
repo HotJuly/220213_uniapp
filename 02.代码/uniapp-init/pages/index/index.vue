@@ -47,8 +47,10 @@
 		</scroll-view>
 		
 		<!-- 内容区域 -->
-		<Recommend v-if="currentIndex===-1"></Recommend>
-		<CateList v-else></CateList>
+		<scroll-view class="contentScroll" scroll-y="true">
+			<Recommend v-if="currentIndex===-1"></Recommend>
+			<CateList v-else></CateList>
+		</scroll-view>
 	</view>
 </template>
 
@@ -123,54 +125,64 @@
 </script>
 
 <style lang="stylus">
-	// tab向后缩紧,shift+tab向前缩进
-	.indexContainer
-		.header
-			display flex
-			margin-top 20upx
-			align-items  center
-			.logo
-				width 118upx
-				height 40upx
-				margin 0 20upx
-			.search
-				position relative
-				height 60upx
-				background #ccc
-				flex-grow 1
-				border-radius  10upx
-				padding-left 60upx
-				.iconfont
-					position absolute
-					top 50%
-					left 20upx
-					transform translateY(-50%)
-				.searchInput
-					height 100%
-					.placeholder
-						text-align center
-						font-size 24upx
-						text-indent -40upx
-			.username
-				width 140upx
-				height 60upx
-				border-radius  10upx
-				color red
-				font-size 24upx
-				text-align  center
-				line-height  60upx
-				margin 0 20upx
-		.navScroll
-			// display flex
-			white-space nowrap
-			.navItem
-				// flex-shrink 0
-				display inline-block
-				width 140upx
-				height 80upx
-				text-align center
-				line-height 80upx
-				font-size 28upx
-				&.active
-					border-bottom 4upx solid red
+// tab向后缩紧,shift+tab向前缩进
+.indexContainer
+	.header
+		display flex
+		margin-top 20upx
+		align-items  center
+		.logo
+			width 118upx
+			height 40upx
+			margin 0 20upx
+		.search
+			position relative
+			height 60upx
+			background #ccc
+			flex-grow 1
+			border-radius  10upx
+			padding-left 60upx
+			.iconfont
+				position absolute
+				top 50%
+				left 20upx
+				transform translateY(-50%)
+			.searchInput
+				height 100%
+				.placeholder
+					text-align center
+					font-size 24upx
+					text-indent -40upx
+		.username
+			width 140upx
+			height 60upx
+			border-radius  10upx
+			color red
+			font-size 24upx
+			text-align  center
+			line-height  60upx
+			margin 0 20upx
+	.navScroll
+		// display flex
+		white-space nowrap
+		.navItem
+			// flex-shrink 0
+			display inline-block
+			width 140upx
+			height 80upx
+			text-align center
+			line-height 80upx
+			font-size 28upx
+			&.active
+				border-bottom 4upx solid red
+	.contentScroll
+	// 小程序高度计算  100vh = header高度 + nav高度 + content高度 
+	// h5端高度计算  100vh = header高度 + nav高度 + content高度 + 导航栏高度 + tabBar高度
+		height calc(100vh - 80upx - 84upx - var(--window-top) - var(--window-bottom))
+		// /* #ifdef MP */
+		// height calc(100vh - 80upx - 84upx)
+		// /* #endif */
+		// /* #ifdef H5 */
+		// height calc(100vh - 80upx - 84upx - 88upx - 100upx)
+		// /* #endif */
 </style>

@@ -42,6 +42,12 @@ router.get("/getIndexData",function(ctx,next){
     ctx.body=indexData
 })
 
+// 用于返回分类页面所需要的数据
+const categoryDatas = require('./datas/categoryDatas.json')
+router.get("/getCategoryDatas",function(ctx,next){
+    ctx.body=categoryDatas
+})
+
 // 3.将服务器应用实例运行在电脑的某个端口上
 app.listen(3001,(error)=>{
     if(error){
