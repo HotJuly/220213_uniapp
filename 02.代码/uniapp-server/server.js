@@ -48,6 +48,33 @@ router.get("/getCategoryDatas",function(ctx,next){
     ctx.body=categoryDatas
 })
 
+// 用于返回首页分类所需要的数据
+const indexCateList = require('./datas/indexCateList.json')
+
+// 如果想在koa服务器中,异步返回数据,需要使用async和await
+router.get("/getIndexCateList",async function(ctx,next){
+	await new Promise((resolve)=>{
+		setTimeout(()=>{
+			resolve()
+		},2000)
+	})
+	ctx.body=indexCateList;
+})
+
+// 用于返回对应商品的详细数据
+const goods = require('./datas/goods.json')
+router.get("/getGoodDetail",function(ctx,next){
+	// 问题1:如何获取用户传过来的query参数,url传参的数据类型一定是字符串
+	const goodId = ctx.query.goodId;
+	
+	const good = goods.find((good)=>{
+		return good.id === goodId*1;
+	})
+	
+	// console.log('goodId',goodId)
+    ctx.body=good;
+})
+
 // 3.将服务器应用实例运行在电脑的某个端口上
 app.listen(3001,(error)=>{
     if(error){

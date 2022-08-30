@@ -49,7 +49,7 @@
 		<!-- 内容区域 -->
 		<scroll-view class="contentScroll" scroll-y="true">
 			<Recommend v-if="currentIndex===-1"></Recommend>
-			<CateList v-else></CateList>
+			<CateList :navIndex="currentIndex" v-else></CateList>
 		</scroll-view>
 	</view>
 </template>
