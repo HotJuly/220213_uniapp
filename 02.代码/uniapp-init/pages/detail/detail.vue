@@ -30,12 +30,13 @@
 		<view class="detailFooter">
 			<image class="service" src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/detail-kefu-d10f0489d2.png?imageView&type=webp" mode=""></image>
 			<view class="btn buyNow">立即购买</view>
-			<view class="btn addShopCart">加入购物车</view>
+			<view class="btn addShopCart" @click="add">加入购物车</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {mapMutations} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -54,6 +55,19 @@
 			
 			// console.log('result',result)
 			this.goodInfo = result;
+		},
+		methods:{
+			// ADD_SHOPITEM(data){
+			// 	this.$store.commit('cart/ADD_SHOPITEM',data)
+			// }
+			...mapMutations('cart',['ADD_SHOPITEM']),
+			add(){
+				uni.showToast({
+					title:"商品添加成功!"
+				});
+				
+				this.ADD_SHOPITEM(this.goodInfo);
+			}
 		}
 	}
 </script>

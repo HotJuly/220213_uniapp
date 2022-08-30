@@ -150,7 +150,57 @@ const state = {
 	]
 }
 
-const mutations = {}
+const mutations = {
+	ADD_SHOPITEM(state,good){
+		/*
+			需求:当用户点击加入购物车按钮时,将该商品添加到购物车中
+				如果购物车中没有该商品,那么将该商品放入购物车数组中
+				如果购物车中已经存在该商品,那么该商品数量+1
+		*/
+	   // console.log('ADD_SHOPITEM',good)
+	   const cartList = state.cartList;
+	   
+	   // find方法,如果找到符合条件的内容就会返回该内容,如果没有找到内容,就返回undefined
+	   const shopItem = cartList.find((shopItem)=>{
+		return shopItem.id === good.id
+	   })
+	   
+	   if(shopItem){
+		   shopItem.count+=1;
+		   // console.log('+1',shopItem)
+	   }else{
+		   /*
+			响应式:当数据发生变化,页面会展示出最新的结果
+			
+		   响应式属性的创建时机:
+			1.在组件初始化的时候,data函数返回的对象会被进行数据劫持,
+				内部所有属性都会变成响应式属性
+				
+			2.当响应式属性的值被更新的时,如果属性值是个对象,
+				对象中所有的属性也会被进行数据劫持,内部所有属性都会变成响应式属性
+				
+			问题:在Vue中添加响应式属性的API一共有几个?
+				1.Vue.set()
+				2.this.$set(target目标对象,属性名,初始值)
+				3.Vue.observable()
+				
+			问题:如何快速分辨一个属性是否是响应式属性?
+				打印拥有该属性的对象,
+					如果该属性直接显示原值,例如  count:1
+						那么说明该属性是一个非响应式属性
+					如果该属性直接显示...,例如  count:(...)
+						那么说明该属性是一个响应式属性
+		   
+		   */
+		  // 这么写没有响应式效果
+		   // 错误示范:good.count=1;
+		   this._vm.$set(good,'count',1);
+		   cartList.push(good);
+		   // console.log('=1',good)
+	   }
+	   
+	}
+}
 
 const actions = {}
 
