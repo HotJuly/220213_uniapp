@@ -1,0 +1,53 @@
+流程:
+	1.当用户访问我们的网页,并触发了授权功能的开关,我们需要准备一些数据,之后进行页面跳转
+		准备的数据:
+			1.callbackUrl
+				该链接用户接收微信官方返回的用户信息
+				该链接由公司后端人员提供
+				该链接其实就是公司的服务器的某个接口
+
+				该链接不是用于返回网页的,他只是用于接收数据的
+				假设链接地址为http://localhost:3000/getData
+
+			2.state
+				用于传递数据,可写可不写
+				如果写了,该数据最终会传给流程5中的链接进行拼接
+			3.wechatId
+				其实就是AppId,用于区分当前是哪家公司获取用户信息
+
+		浏览器跳转:
+			从http://localhost:3000/
+			跳转到 https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx116c7ab3d519b006&redirect_uri=https://pk.xxx.cn/pk/wechat/getUserInfoCallback&response_type=code&scope=snsapi_userinfo&state=/abc
+
+	2.我们会将浏览器跳转到微信官方的指定授权链接,此时微信会自动弹出授权窗口询问用户是否允许网站获取授权信息
+		如果用户在页面上点击允许授权,那么微信官方会将页面再次跳转
+		此时浏览器会从微信官方的网页,跳转到流程1中准备的callbackUrl链接
+
+		同时会在链接中使用query字符串形式,拼接用户的临时登录凭证code
+
+		小总结:也就是说到流程2,公司服务器就已经获取到用户的code码了
+			此处,用户的浏览器只是发送了请求给公司服务器,公司服务器还没有返回响应内容给浏览器
+
+		浏览器跳转:
+			从 https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx116c7ab3d519b006&redirect_uri=https://pk.xxx.cn/pk/wechat/getUserInfoCallback&response_type=code&scope=snsapi_userinfo&state=/abc
+			跳转到http://localhost:3000/getData?code=abc123456
+
+
+	3.公司服务器使用得到的code码,发送请求,请求微信官方服务器,兑换用户的唯一标识token数据
+
+	4.流程3请求结束,微信服务器会将对应的用户信息返回给服务器
+
+	5.公司服务器获取到用户信息之后,重定向用户的浏览器,让他重新访问公司h5项目的网址链接
+		但是注意,此时公司服务器会在链接中,拼接用户相关信息给h5网页进行使用
+
+		浏览器跳转:
+			从http://localhost:3000/getData?code=abc123456
+			跳转到http://localhost:3000?nickName=abc&&avatarUrl=....
+						?uid=001
+
+
+参考链接:https://blog.csdn.net/z9061/article/details/105988489
+
+
+
+

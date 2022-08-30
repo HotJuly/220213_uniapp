@@ -1,80 +1,33 @@
 <template>
 	<view class="categoryContainer">
-		<view class="header">
-			<view class="search_div">
-				搜索商品
-			</view>
-		</view>
+		<view class="header"><view class="search_div">搜索商品</view></view>
 		<view class="content">
 			<view class="leftContainer">
 				<scroll-view scroll-y="true" class="navScroll">
-					<view 
-					class="navItem active"
-					v-for="item in categoryNames"
-					:key="item"
-					>{{item}}</view>
+					<view class="navItem"
+					:class="{
+						active:currentIndex===index
+					}"
+					@click="changeCurrentIndex(index)"
+					 v-for="(item,index) in categoryNames" :key="item">{{ item }}</view>
 				</scroll-view>
 			</view>
 			<view class="rightContainer">
 				<scroll-view scroll-y="true" class="contentScroll">
 					<view class="scrollHeader">
-						<image class="headerImg" src="https://yanxuan.nosdn.127.net/9fafb4adb40303dc2914c3aa04da03df.jpg?quality=75&type=webp&imageView&thumbnail=0x196" mode=""></image>
+						<image
+							class="headerImg"
+							:src="categoryObj.imgUrl"
+							mode=""
+						></image>
 					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
-					</view>
-					<view class="contentItem">
-						<image src="http://yanxuan.nosdn.127.net/749f0ba087d2035b6d2937b4919952de.png" mode=""></image>
-						<text>秋冬好物</text>
+					<view 
+					class="contentItem"
+					v-for="item in categoryObj.subCateList"
+					:key="item.id"
+					>
+						<image :src="item.wapBannerUrl" mode=""></image>
+						<text>{{item.name}}</text>
 					</view>
 				</scroll-view>
 			</view>
@@ -83,18 +36,25 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				categoryDatas:[]
-			};
-		},
-		async created(){
-			const result = await this.$myAxios('/getCategoryDatas');
-			// console.log('result',result);
-			this.categoryDatas =result;
-		},
-		/*
+export default {
+	data() {
+		return {
+			categoryDatas: [],
+			
+			currentIndex:0
+		};
+	},
+	async created() {
+		const result = await this.$myAxios('/getCategoryDatas');
+		// console.log('result',result);
+		this.categoryDatas = result;
+	},
+	methods:{
+		changeCurrentIndex(index){
+			this.currentIndex = index;
+		}
+	},
+	/*
 			问题:请说下你对computed和watch(或者是区别)
 			解答:
 				1.相同点
@@ -121,18 +81,21 @@
 					
 		
 		*/
-		computed:{
-			// b(){},
-			categoryNames(){
-				return this.categoryDatas.map((item)=>{
-					return item.name
-				})
-			}
+	computed: {
+		// b(){},
+		categoryNames() {
+			return this.categoryDatas.map(item => {
+				return item.name;
+			});
 		},
-		// watch:{
-		// 	a(){}
-		// }
+		categoryObj(){
+			return this.categoryDatas[this.currentIndex]||{}
+		}
 	}
+	// watch:{
+	// 	a(){}
+	// }
+};
 </script>
 
 <style lang="stylus">
@@ -161,9 +124,9 @@
 			font-size 26upx
 			text-align center
 			border-right 1upx solid #eee
-			//border-box 称为怪异盒模型 , 又称为IE盒模型,内缩盒模型,布局占位宽度 width(content+padding+border)+margin
-			//content-box 标准盒模型,布局占位宽度 width+padding+border+margin
-			box-sizing border-box  
+			// border-box 称为怪异盒模型 , 又称为IE盒模型,内缩盒模型,布局占位宽度 width(content+padding+border)+margin
+			// content-box 标准盒模型,布局占位宽度 width+padding+border+margin
+			box-sizing border-box
 			.navScroll
 				height 100%
 				background-color white
@@ -197,7 +160,7 @@
 					display inline-flex
 					flex-direction column
 					align-items center
-					width 33.333% 
+					width 33.333%
 					image
 						width 160upx
 						height 144upx
